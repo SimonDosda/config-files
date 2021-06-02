@@ -1,0 +1,56 @@
+[user]
+  email = sdosda@wiremind.fr
+  name = Simon Dosda
+[core]
+  autocrlf = input
+  editor = vi
+[push]
+  default = simple
+[help]
+  autocorrect = 1
+[init]
+  templatedir = ~/.git-templates
+[alias]
+  co = checkout
+  br = branch
+  ci = commit
+  st = status
+  
+  nb = checkout -b  # create a new branch
+  del = branch -D  # delete a branch
+  
+  # give a quick look at the state of the repo
+  state = !git fetch --prune && git fetch --tags && clear && git branch -vv && git status
+  # list the n last commits
+  ll = !git log --oneline -n  
+  
+  # stage and commit all the changes
+  c = !git add -A && git commit -m   
+  # stage and commit all the changes with WIP as a commit message
+  wip = !git add -A && git commit -m 'WIP'
+  # drop current changes
+  drop = !git stash && git stash drop  
+  
+  # push to the same branch name
+  p = !git push -u origin $(git rev-parse --abbrev-ref HEAD)
+  # force push to the same branch name
+  fp = !git push origin $(git rev-parse --abbrev-ref HEAD) -f
+  # amend everything in the current commit
+  amend = !git add -A && git commit --amend --no-edit
+  # amend and force push
+  afp = !git amend && git fp
+  
+  # rebase on origin/master
+  rom = !git fetch --all && git rebase origin/master
+  # reset the branch to the distant one
+  rh = !git fetch && git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)
+  # interactive rebasing
+  ri = "!f() { git rebase -i HEAD~$1; }; f"
+  
+  # copy current hash in the clipboard 
+  cp = !git rev-parse HEAD | xargs echo -n  | xclip -selection clipboard
+[pager]
+  log = false
+  branch = false
+[pull]
+  ff = only
