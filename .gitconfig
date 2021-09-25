@@ -1,5 +1,5 @@
 [user]
-  email = sdosda@wiremind.fr
+  email = sdosda@gmail.com
   name = Simon Dosda
 [core]
   autocrlf = input
@@ -8,8 +8,6 @@
   default = simple
 [help]
   autocorrect = 1
-[init]
-  templatedir = ~/.git-templates
 [alias]
   co = checkout
   br = branch
