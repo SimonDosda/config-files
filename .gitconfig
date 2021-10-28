@@ -1,5 +1,5 @@
 [user]
-  email = sdosda@gmail.com
+  email = sdosda@wiremind.io
   name = Simon Dosda
 [core]
   autocrlf = input
@@ -52,3 +52,5 @@
   branch = false
 [pull]
   ff = only
+[init]
+	defaultBranch = main
