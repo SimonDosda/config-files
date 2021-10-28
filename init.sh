@@ -84,7 +84,7 @@ sudo apt install code
 
 echo "set zsh"
 ln .zshrc ~/.zshrc
-source ~/.zshr
+source ~/.zshrc
 
 echo "set git config"
 ln .gitconfig  ~/.gitconfig  
