@@ -52,7 +52,7 @@ ENABLE_CORRECTION="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git extract virtualenv zsh-autosuggestions)
+plugins=(git extract virtualenv zsh-autosuggestions docker docker-compose)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -106,8 +106,21 @@ export GEM_HOME="$HOME/gems"
 export PATH="$HOME/gems/bin:$PATH"
 
 # Added by n-install (see http://git.io/n-install-repo).
-export N_PREFIX="$HOME/.n/"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  
+export N_PREFIX="$HOME/.n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  
 
 # kubectl autocomplete
 source <(kubectl completion zsh)
 
+
+autoload -Uz compinit
+zstyle ':completion:*' menu select
+fpath+=~/.zfunc
+
+if [ -n "$MAYO_PS1" ]; then
+    PROMPT_COMMAND="mayo() { if [[ \"\$#\" == \"1\" && \"\$1\" == \"port-forward-stop\" ]]; then command mayo port-forward-stop && exit ;  else command mayo \"\$@\" ; fi;}"
+    precmd() { eval "$PROMPT_COMMAND" }
+    PS1="$MAYO_PS1"
+    FOO=${MAYO_MPPID:=$(echo $$)}; export MAYO_MPPID
+    echo "$MAYO_WELCOME_MESSAGE"
+fi
+export PS1

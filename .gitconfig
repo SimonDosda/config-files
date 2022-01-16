@@ -1,5 +1,4 @@
 [user]
-  email = sdosda@wiremind.io
   name = Simon Dosda
 [core]
   autocrlf = input
@@ -22,24 +21,24 @@
   # list the n last commits
   ll = !git log --oneline -n  
   
-  # stage and commit all the changes
-  c = !git add -A && git commit -m   
-  # stage and commit all the changes with WIP as a commit message
-  wip = !git add -A && git commit -m 'WIP'
+  # commit all the changes
+  c = !git add --all && git commit  -m   
+  # commit all the changes with WIP as a commit message
+  wip = !git add --all && git commit -m 'WIP'
   # drop current changes
-  drop = !git stash && git stash drop  
+  drop = !git reset --hard HEAD  
   
   # push to the same branch name
   p = !git push -u origin $(git rev-parse --abbrev-ref HEAD)
   # force push to the same branch name
   fp = !git push origin $(git rev-parse --abbrev-ref HEAD) -f
   # amend everything in the current commit
-  amend = !git add -A && git commit --amend --no-edit
+  amend = !git add --all && git commit --amend --no-edit
   # amend and force push
   afp = !git amend && git fp
   
-  # rebase on origin/master
-  rom = !git fetch --all && git rebase origin/master
+  # rebase on main origin branch
+  rom = !git fetch --all && git rebase $(git rev-parse --abbrev-ref origin/HEAD)
   # reset the branch to the distant one
   rh = !git fetch && git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)
   # interactive rebasing
@@ -50,6 +49,7 @@
 [pager]
   log = false
   branch = false
+  reflog = false
 [pull]
   ff = only
 [init]
