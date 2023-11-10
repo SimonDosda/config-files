@@ -115,12 +115,3 @@ source <(kubectl completion zsh)
 autoload -Uz compinit
 zstyle ':completion:*' menu select
 fpath+=~/.zfunc
-
-if [ -n "$MAYO_PS1" ]; then
-    PROMPT_COMMAND="mayo() { if [[ \"\$#\" == \"1\" && \"\$1\" == \"port-forward-stop\" ]]; then command mayo port-forward-stop && exit ;  else command mayo \"\$@\" ; fi;}"
-    precmd() { eval "$PROMPT_COMMAND" }
-    PS1="$MAYO_PS1"
-    FOO=${MAYO_MPPID:=$(echo $$)}; export MAYO_MPPID
-    echo "$MAYO_WELCOME_MESSAGE"
-fi
-export PS1
