@@ -1,6 +1,9 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+# Omarchy environment (OMARCHY_PATH + PATH)
+[ -r /usr/share/omarchy/default/bash/env-bootstrap ] && source /usr/share/omarchy/default/bash/env-bootstrap
+
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -86,7 +89,8 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 export SHELL
-export TERM=xterm-256color
+# Don't override TERM inside tmux (it sets tmux-256color itself)
+[ -z "$TMUX" ] && export TERM=xterm-256color
 
 # use vi like mode
 set -o vi
@@ -97,9 +101,11 @@ bindkey '^ ' forward-word
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 # pyenv config
-export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+if [ -d "$HOME/.pyenv" ]; then
+  export PATH="$HOME/.pyenv/bin:$PATH"
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+fi
 
 # Install Ruby Gems to ~/gems
 export GEM_HOME="$HOME/gems"
@@ -109,9 +115,12 @@ export PATH="$HOME/gems/bin:$PATH"
 export N_PREFIX="$HOME/.n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  
 
 # kubectl autocomplete
-source <(kubectl completion zsh)
+(( $+commands[kubectl] )) && source <(kubectl completion zsh)
 
 
 autoload -Uz compinit
 zstyle ':completion:*' menu select
 fpath+=~/.zfunc
+
+# mise (Omarchy's tool version manager)
+(( $+commands[mise] )) && eval "$(mise activate zsh)"
